@@ -1,0 +1,15 @@
+[Unit]
+Description=Phabricator Daemons
+
+[Service]
+WorkingDirectory=/data/wwwroot/phabricator/phabricator
+ExecStart=/usr/bin/php bin/phd start
+User=www-data
+Group=www-data
+Type=simple
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=Phabricator
+
+[Install]
+WantedBy=multi-user.target

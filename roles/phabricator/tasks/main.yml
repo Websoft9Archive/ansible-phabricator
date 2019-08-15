@@ -1,0 +1,139 @@
+- name: Install Apache and PHP
+  apt:
+    name: [git,apache2,libapache2-mod-php,php,php-mysql,php-gd,php-curl,php-apcu,php-cli,php-json,php-mbstring,php-zip]
+
+- name: Enabling mod_rewrite in Apache.
+  apache2_module:
+    name: rewrite
+
+- name: Create Phabricator directory
+  file:
+    path: /data/wwwroot/phabricator
+    state: directory
+    owner: www-data
+    group: www-data
+
+- name: Downloading Phabricator and dependencies
+  git: 
+    repo: '{{ item.repo }}'
+    dest: /data/wwwroot/phabricator/{{ item.dest }}
+  with_items:
+    - {repo: "https://github.com/phacility/libphutil.git",dest: libphutil}
+    - {repo: "https://github.com/phacility/arcanist.git",dest: arcanist}
+    - {repo: "https://github.com/phacility/phabricator.git",dest: phabricator}
+
+- name: Change Phabricator owner and group
+  file:
+    path: /data/wwwroot/phabricator/{{ item }}
+    owner: www-data
+    group: www-data
+    recurse: yes
+  with_items:
+    - libphutil
+    - arcanist
+    - phabricator
+
+- name: Configuration Apache
+  copy: 
+    src: 000-default.conf
+    dest: /etc/apache2/sites-available
+
+
+- name: Configuration PHP
+  lineinfile:
+    dest: /etc/php/7.2/apache2/php.ini
+    regexp: '{{ item.regexp }}'
+    line: "{{ item.line }}"
+    state: present
+  with_items:
+    - {regexp: 'post_max_size = 8M' ,line: 'post_max_size = 512M'}
+    - {regexp: ';opcache.validate_timestamps=1',line: 'opcache.validate_timestamps=0'}
+
+- name: Restart Apache2
+  service:
+    name: apache2
+    state: restarted
+
+
+- name: Get MySQL root Default Password
+  shell: cat /credentials/password.txt | awk 'NR==2' |awk -F ":" '{print $2}'
+  register: mysql_password 
+
+
+- name: Configuration Connect to MySQL and Generating database
+  shell: |
+    ./bin/config set mysql.host localhost
+    ./bin/config set mysql.user root
+    ./bin/config set mysql.pass {{mysql_password.stdout}}
+    ./bin/storage upgrade --force
+  args:
+    chdir: /data/wwwroot/phabricator/phabricator/
+
+- name: Create repo directory 
+  file:
+    path: /data/repo
+    state: directory
+    owner: www-data
+    group: www-data
+
+- name: Install Pygments
+  pip:
+    name: pygments
+
+- name: Configuring Phabricator
+  shell: '{{ item }}'
+  args:
+    chdir: /data/wwwroot/phabricator/phabricator/
+  with_items:
+    - ./bin/config set storage.mysql-engine.max-size 8388608 
+    - ./bin/config set repository.default-local-path /data/repo	
+    - ./bin/config set pygments.enabled true
+
+- name: Configuring Phabricator for MySQL
+  copy:
+    src: mysqld.cnf
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+
+- name: restart MySQL
+  service:
+    name: mysql
+    state: restarted
+    enabled: yes
+
+- name: Phabricator Daemons 
+  copy: 
+   src: phabricator-daemons.service
+   dest: /lib/systemd/system/phabricator-daemons.service
+
+- name: Start Phabricator Daemons 
+  service:
+    name: phabricator-daemons.service
+    state: started
+    enabled: yes
+
+
+- name: Write Databases Password
+  template:
+    src: password.txt.jinja2
+    dest: /credentials/password.txt
+    mode: 644
+
+- name: Write rc.local
+  shell: echo "#!/bin/bash" > /etc/rc.local
+
+- name: restart rc.local
+  service: name=rc.local state=restarted enabled=yes
+
+
+- name: Databases Random Password
+  template: 
+    src: init.sh.jinja2
+    dest: /root/init.sh
+    mode: 0750
+
+- name: Setting Startup
+  lineinfile:
+    path: /etc/rc.local
+    regexp: '/root/init.sh'
+    line: '/root/init.sh'
+    mode: 0750
