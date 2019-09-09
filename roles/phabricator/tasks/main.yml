@@ -111,6 +111,10 @@
     state: started
     enabled: yes
 
+- name: Phabricator SMTP template
+  copy: 
+    src: mailers.json
+    dest: /data/wwwroot/phabricator/phabricator/
 
 - name: Write Databases Password
   template:
