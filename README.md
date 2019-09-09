@@ -16,7 +16,7 @@
 
 ## 如何安装最新版本？
 
-从Github上 git clone 下来，每次安装均可保证最新版本
+本自动化程序从 Github 克隆 Phabricator，故每次安装均可保证最新版本
 
 ## Ansible安装指南
 
