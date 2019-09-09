@@ -11,14 +11,14 @@ Nonetheless, from the perspective of server security and subsequent maintenance 
 Phabricator domain name binding steps:
 
 1. Connect your Cloud Server
-2. Modify [Nginx vhost configuration file](/stack-components.md#nginx), change the **server_name**'s value *metabase.example.com* to your domain name
+2. Modify [Apache vhost configuration file](/stack-components.md#apache), change the **ServerName**'s value *www.example.com* to your domain name
    ```text
-   server {
-      listen 80;
-      server_name    metabase.example.com; # Change to a your domain name
-   ...
+    <VirtualHost *:80>
+    ServerName www.example.com
+    ...
+    </VirtualHost>
    ```
-3. Save it and restart [Nginx Service](/admin-services.md#nginx)
+3. Save it and restart [Apache Service](/admin-services.md#apache)
 
 
 ## Other

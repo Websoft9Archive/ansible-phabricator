@@ -29,7 +29,8 @@ module.exports = [
         children: [
           '/admin-services',
           '/admin-mysql',
-          ['https://support.websoft9.com/docs/linux/webs-nginx.html','Nginx'],
+          ['https://support.websoft9.com/docs/linux/lang-php.html','PHP'],
+          ['https://support.websoft9.com/docs/linux/webs-apache.html','Apache'],
           ['https://support.websoft9.com/docs/linux/admin-practices.html','Linux'],
         ]
       },

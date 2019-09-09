@@ -6,24 +6,24 @@ The Phabricator deployment package contains a sequence software (referred to as 
 
 ### Phabricator
 
-Phabricator installation directory: */data/wwwroot/metabase*  
-Phabricator configuration file: */data/wwwroot/metabase/metabase.conf*  
+Phabricator installation directory: */data/wwwroot/phabricator*  
+Phabricator configuration file: */data/wwwroot/phabricator/phabricator/conf/local/local.json*  
 
-### Java
+### PHP
 
-Java Directory: */usr/lib/jvm*
+PHP configuration file: */etc/php/7.2/apache2/php.ini*
 
-### Nginx
+### Apache
 
-Nginx vhost configuration file: */etc/nginx/sites-available/default.conf*  
-Nginx main configuration file: */etc/nginx/nginx.conf*  
-Nginx logs file: */var/log/nginx/*
+Apache vhost configuration file: */etc/apache2/sites-enabled/000-default.conf*  
+Apache main configuration file: */etc/apache2/apache2.conf*  
+Apache logs file: */var/log/apache2*
 
 ### MYSQL
 
-MySQL installation directory: */usr/local/mysql*  
+MySQL installation directory: */usr/share/mysql*  
 MySQL data directory: */data/mysql*  
-MySQL configuration file: */etc/my.cnf*    
+MySQL configuration file: */etc/mysql/my.cnf*    
 MySQL Web Management URL: *http://Internet IP:9090*, get credential from [Username and Password](/stack-accounts.md)
 
 
@@ -43,11 +43,11 @@ These Ports is need when use Phabricator, refer to [Safe Group Setting on Cloud 
 You can see the version from product page of Marketplace. However, after being deployed to your server, the components will be automatically updated, resulting in a certain change in the version number. Therefore, the exact version number should be viewed by running the command on the server:
 
 ```shell
-# Java Version
-java --version
+# PHP Version
+php -v
 
-# Nginx version:
-nginx -v
+# Apache version:
+apache2 -v
 
 # MySQL version:
 mysql -V

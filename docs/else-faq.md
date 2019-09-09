@@ -33,7 +33,7 @@ Yes, modify it by [Nginx vhost configuration file](/stack-components.md)
 Change owner(group) or permissions like below:
 
 ```shell
-chown -R nginx.nginx /data/wwwroot
+chown -R apache.apache /data/wwwroot
 find /data/wwwroot -type d -exec chmod 750 {} \;
 find /data/wwwroot -type f -exec chmod 640 {} \;
 ```

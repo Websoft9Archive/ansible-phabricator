@@ -54,9 +54,13 @@ sidebarDepth: 3
 ```
 通用的手动备份操作步骤如下：
 
-1. 通过WinSCP将网站目录（*/data/wwwroot/metabase*）**压缩后**再完整的下载到本地
+1. 通过WinSCP将网站目录（*/data/wwwroot/phabricator*）**压缩后**再完整的下载到本地
 2. 通过phpMyAdmin导出Phabricator数据库
    ![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/mysql/phpmyadmin-export-websoft9.png)
 3. 将程序文件和数据库文件放到同一个文件夹，根据日期命名
 4. 备份工作完成
+
+### CLI 备份
+
+Phabricator 官方提供了 CLI 备份相关的命令，参考[Configuring Backups and Performing Migrations](https://secure.phabricator.com/book/phabricator/article/configuring_backups/)
 

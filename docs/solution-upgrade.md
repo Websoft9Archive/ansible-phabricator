@@ -26,17 +26,4 @@ yum update -y
 
 ## Phabricator Upgrade
 
-Follow the steps below to complete the upgrade:
-
-1. Log in Phabricator, go to Admin->Setting->Updates, the system will give you a reminder if there is a new upgrade package
-![Phabricator updates reminder](https://libs.websoft9.com/Websoft9/DocsPicture/en/metabase/metabase-updatereminder-websoft9.png)
-
-2. Click the **Upgrade** button, go to the [Phabricator Install](https://metabase.com/start/) page
-
-3. The deployment package we provide is in the jar package installation mode, so on the installation page we select the **Custom install** mode.
-![Phabricator install](https://libs.websoft9.com/Websoft9/DocsPicture/zh/metabase/metabase-updatedl-websoft9.png)
-
-3. Download teh Phabricator.jar pakage and upload to your instance's directory `/data/wwwroot/metabase`
-![Phabricator upload](https://libs.websoft9.com/Websoft9/DocsPicture/zh/metabase/metabase-updatereplace-websoft9.png)
-
-4. Overwrite existing files and reload the Phabricator
+Refer to the Phabricator docs: [Upgrading Phabricator](https://secure.phabricator.com/book/phabricator/article/upgrading/)
