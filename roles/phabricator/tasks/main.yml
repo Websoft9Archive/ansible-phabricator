@@ -2,16 +2,28 @@
   apt:
     name: [git,apache2,libapache2-mod-php,php,php-mysql,php-gd,php-curl,php-apcu,php-cli,php-json,php-mbstring,php-zip]
 
+- name: Import Certbot PPA
+  apt_repository:
+    repo: ppa:certbot/certbot
+
+- name: Install Certbot
+  apt: 
+    name: [certbot,python-certbot-apache]
+
+
 - name: Enabling mod_rewrite in Apache.
   apache2_module:
     name: rewrite
 
 - name: Create Phabricator directory
   file:
-    path: /data/wwwroot/phabricator
+    path: /data/{{item}}
     state: directory
     owner: www-data
     group: www-data
+  with_items:
+    - wwwroot/phabricator
+    - cert
 
 - name: Downloading Phabricator and dependencies
   git: 
@@ -111,6 +123,10 @@
     state: started
     enabled: yes
 
+- name: Phabricator SMTP template
+  copy: 
+    src: mailers.json
+    dest: /data/wwwroot/phabricator/phabricator/
 
 - name: Write Databases Password
   template:
