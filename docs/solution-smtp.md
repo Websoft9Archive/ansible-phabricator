@@ -15,9 +15,19 @@ Follow is the sample using **SendGrid's SMTP Service** to configure sending mail
    SMTP username: websoft9smpt
    SMTP password: #fdfwwBJ8f    
    ```
-2. Log in Phabricator Console
-3. Enter the SMTP settings
-![Phabricator SMTP](https://libs.websoft9.com/Websoft9/DocsPicture/en/metabase/metabase-smtp-websoft9.png)
-4. Click the **Test Connection**, you can get the feedback *"no errors were..."* if SMTP is useful
+2. Use SFTP to connect Cloud Server, then cd to */data/wwwroot/phabricator/phabricator* directory
+3. Edit the file *mailers.json*, set the SMTP item for yourself, then save it
+4. Run these commands
+   ```
+   # set smtp
+   ./bin/config set --stdin cluster.mailers < mailers.json
 
-More SMTP Service(Gmail, Hotmail, QQ mail, Yahoo mail, SendGrid and so on)  settings or Issues with SMTP, please refer to Websoft9's *[SMTP Guide](https://support.websoft9.com/docs/faq/tech-smtp.html)*
+   # restart service
+   sudo systemctl restart phabricator-daemons
+   ```
+5. Setup completed
+
+More SMTP Service(Gmail, Hotmail, QQ mail, Yahoo mail, SendGrid and so on)  settings or Issues with SMTP, please refer to Websoft9's *[SMTP Guide](https://support.websoft9.com/docs/faq/tech-smtp.html)*  
+
+Phabricator have provided docs for you: [Configuring Outbound Email](https://secure.phabricator.com/book/phabricator/article/configuring_outbound_email/)
+

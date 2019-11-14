@@ -6,26 +6,26 @@ Phabricator 预装包包含 Phabricator 运行所需一序列支撑软件（简�
 
 ### Phabricator
 
-Phabricator 安装目录： */data/wwwroot/metabase*  
-Phabricator 配置文件： */data/wwwroot/metabase/metabase.conf*  
+Phabricator 安装目录： */data/wwwroot/phabricator*  
+Phabricator 配置文件： */data/wwwroot/phabricator/phabricator/conf/local/local.json*  
 
-> Phabricator 配置文件中包含数据库连接信息，更改了 MySQL 数据库账号密码，此处也需要对应修改
+> Phabricator 配置文件数据库连接信息，更改了 MySQL 数据库账号密码，此处也需要对应修改
 
-### Java
+### PHP
 
-Java Directory: */usr/lib/jvm*
+PHP 配置文件: */etc/php/7.2/apache2/php.ini*
 
-### Nginx
+### Apache
 
-Nginx 虚拟主机配置文件：*/etc/nginx/sites-available/default.conf*  
-Nginx 主配置文件： */etc/nginx/nginx.conf*  
-Nginx 日志文件： */var/log/nginx/*
+Apache 虚拟主机配置文件：*/etc/apache2/sites-enabled/000-default.conf*  
+Apache 主配置文件： */etc/apache2/apache2.conf*  
+Apache 日志文件： */var/log/apache2*
 
 ### MYSQL
 
-MySQL 安装路径: */usr/local/mysql*  
+MySQL 安装路径: */usr/share/mysql*  
 MySQL 数据文件 */data/mysql*  
-MySQL 配置文件: */etc/my.cnf*    
+MySQL 配置文件: */etc/mysql/my.cnf*    
 MySQL 可视化管理地址: *http://服务器公网IP:9090*，用户名和密码请见 [账号密码](/zh/stack-accounts.md) 章节。
 
 
@@ -45,11 +45,11 @@ MySQL 可视化管理地址: *http://服务器公网IP:9090*，用户名和密�
 组件版本号可以通过云市场商品页面查看。但部署到您的服务器之后，组件会自动进行更新导致版本号有一定的变化，故精准的版本号请通过在服务器上运行命令查看：
 
 ```shell
-# Java Version
-java --version
+# PHP Version
+php -v
 
-# Nginx version:
-nginx -v
+# Apache version:
+apache2 -v
 
 # MySQL version:
 mysql -V

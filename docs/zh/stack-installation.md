@@ -10,32 +10,22 @@
 
 ## Phabricator 安装向导
 
-1. 使用本地电脑的 Chrome 或 Firefox 浏览器访问网址：*http://域名* 或 *http://Internet IP*, 就进入了软件的引导首页
-![Phabricator初始化页面](https://libs.websoft9.com/Websoft9/DocsPicture/en/metabase/metabase-start-websoft9.png)
+1. 使用本地电脑的 Chrome 或 Firefox 浏览器访问网址：*http://域名* 或 *http://Internet IP*, 提示创建一个管理员账号（没有设置密码项，需要登录控制台后再设置）
+   ![Phabricator初始化页面](https://libs.websoft9.com/Websoft9/DocsPicture/en/phabricator/phabricator-createadmin-websoft9.png)
 
-2. 软件的加载速度比较慢，耐心等待1-3分钟，直至出现如下的界面。
-![开始安装Phabricator](https://libs.websoft9.com/Websoft9/DocsPicture/zh/metabase/metabase-starty-websoft9.png)
+2. 控制台顶部菜单会有一个"Unresolved Setup Issues"提示，有两个初始化项建议处理
+   ![Phabricator 提示](https://libs.websoft9.com/Websoft9/DocsPicture/en/phabricator/phabricator-dashboard-websoft9.png)
 
-3. 点击“让我们开始吧”，接下来首先设置登录账号，完成后进入下一步
-4. 添加你的数据：可以选择使用的数据类型来连接一个需要分析的外部数据库，如果没有也可以点击“我之后再添加”，这样系统会默认给 Phabricator 增加一个H2演示数据
-![配置Phabricator](https://libs.websoft9.com/Websoft9/DocsPicture/zh/metabase/metabase-installdb-websoft9.png)
+3. 设置URI地址。依次打开：【Config】>【SETUP】>【Setup Issues】>【Base URI Not Configured】
+   ![Phabricator URI](https://libs.websoft9.com/Websoft9/DocsPicture/en/phabricator/phabricator-url-websoft9.png)
 
-5. 安装成功后的界面，点击“带我去Phabricator”登录后台
-![Phabricator安装成功](https://libs.websoft9.com/Websoft9/DocsPicture/zh/metabase/metabase-installss-websoft9.png)
+4. 系统会生成一个设置URL的命令，复制命令，然后 SSH 远程登录到服务器中运行命名
+   ![Phabricator URL](https://libs.websoft9.com/Websoft9/DocsPicture/en/phabricator/phabricator-urlcmd-websoft9.png)
 
-6. 以H2演示数据为例，开始数据分析工作
-![Phabricator H2演示](https://libs.websoft9.com/Websoft9/DocsPicture/zh/metabase/metabase-dashborad-websoft9.png)
+5. 设置登录方式。依次打开：【Config】>【SETUP】>【Setup Issues】>【No Authentication Providers Configured】，根据提示完成后续设置
+   ![Phabricator Authentication](https://libs.websoft9.com/Websoft9/DocsPicture/en/phabricator/phabricator-setautho-websoft9.png)
 
-7. Phabricator有强大的系统管理能力：后台->设置，进入系统管理界面
-![Phabricator Admin](https://libs.websoft9.com/Websoft9/DocsPicture/zh/metabase/metabase-admin-websoft9.png)
-
-8. 通过“添加一个数据库”来增加一个数据分析源
-![Phabricator 增加数据库](https://libs.websoft9.com/Websoft9/DocsPicture/zh/metabase/metabase-adddb-websoft9.png)
-
-9. 通过点击“人员管理”标签，管理使用Phabricator用户，包括增加用户、修改密码等
-![Phabricator 人员管理](https://libs.websoft9.com/Websoft9/DocsPicture/zh/metabase/metabase-users-websoft9.png)
-
-> 需要了解更多Phabricator的使用，请参考官方文档：[Phabricator Documentation](https://metabase.com/docs/latest/)
+> 需要了解更多 Phabricator 的使用，请参考官方文档：[Phabricator Documentation](https://secure.phabricator.com/book/phabricator/)
 
 ## 常见问题
 
@@ -45,4 +35,8 @@
 
 #### 本部署包采用的哪个数据库来存储 Phabricator 数据？
 
-是MySQL
+MySQL
+
+#### Phabricator 初始化创建管理员账号步骤中为什么没有密码设置项？
+
+需要登录到 Phabircator 控制台后再设置登录方式

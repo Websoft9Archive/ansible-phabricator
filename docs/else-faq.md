@@ -2,11 +2,20 @@
 
 #### Phabricator support multi-language?
 
-Yes
+#### Does Phabricator offer CLI tools?
+
+Yes, cd to directory of your Pharicator instance: */data/wwwroot/phabricator/phabricator* 
+```
+# cli sample
+./bin/config
+./bin/storage dump
+```
+
+Yes, but no Chinese
 
 #### Where is the database connection configuration of Phabricator?
 
-Database configuration information in *metabase.conf* in the Phabricator installation directory, [refer to the installation directory](/stack-components.md#metabase)
+Database configuration information in *local.json* in the Phabricator installation directory, [refer to the installation directory](/stack-components.md#phabricator)
 
 #### If there is no domain name, can I deploy Phabricator?
 
@@ -33,7 +42,7 @@ Yes, modify it by [Nginx vhost configuration file](/stack-components.md)
 Change owner(group) or permissions like below:
 
 ```shell
-chown -R nginx.nginx /data/wwwroot
+chown -R apache.apache /data/wwwroot
 find /data/wwwroot -type d -exec chmod 750 {} \;
 find /data/wwwroot -type f -exec chmod 640 {} \;
 ```

@@ -11,21 +11,17 @@ If you want to use a free certificate, just run the one command `certbot` on you
 If you have applied for a commercial certificate, complete the HTTPS configuration in just three steps:
 
 1. Upload your certificate to the directory of your instance: */data/cert* 
-2. Edit the vhost configuration file: */etc/nginx/conf.d/default.conf* 
-3. Insert the **HTTPS template** into *server{  }* and modify to your certificate path
-   ``` text
+2. Edit the vhost configuration file: */etc/apache2/sites-enabled/000-default.conf* 
+3. Insert the **HTTPS template** into *VirtualHost{  }* and modify to your certificate path
+ ``` text
    #-----HTTPS template start------------
-   listen 443 ssl; 
-   ssl_certificate /data/cert/xxx.crt;
-   ssl_certificate_key /data/cert/xxx.key;
-   ssl_session_timeout 5m;
-   ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-   ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;
-   ssl_prefer_server_ciphers on;
+   SSLEngine on
+   SSLCertificateFile  /data/cert/www.mydomain.com.crt
+   SSLCertificateKeyFile  /data/cert/www.mydomain.com.key
    #-----HTTPS template end------------
    ```
-4. Save file and [Restart Nginx service](/admin-services.md)
+4. Save file and [Restart Apache service](/admin-services.md)
 
 ## Special Guide
 
-For details on configuring HTTPS pre-conditions, HTTPS configuration segment templates, precautions, detailed steps, and troubleshooting, refer to the [HTTPS Special Guide](https://support.websoft9.com/docs/faq/tech-https.html#nginx) provided by Websoft9 
+For details on configuring HTTPS pre-conditions, HTTPS configuration segment templates, precautions, detailed steps, and troubleshooting, refer to the [HTTPS Special Guide](https://support.websoft9.com/docs/faq/tech-https.html#apache) provided by Websoft9 

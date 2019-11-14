@@ -6,16 +6,16 @@ home: false
 
 本文档由 [Websoft9](https://www.websoft9.com/) 公司提供，用于指导用户学习 Phabricator 的安装部署与基本运维技术，包括：Phabricator部署、初始化安装、环境配置、HTTPS、SMTP、备份升级和连接云服务器操作等基本操作。
 
-[Phabricator](https://www.metabase.com/) 是一个简单、开源的数据呈现方式，通过给公司成员、分析师新建Question，从而得到数据进行分析、学习。
+[Phabricator](https://github.com/phacility/phabricator) 是一个软件开发工具的开源平台。用于存储库托管，代码审查，任务跟踪以及软件开发常见的许多其他任务的工具。
 
-![](https://libs.websoft9.com/Websoft9/DocsPicture/en/metabase/metabase-product-screenshot.png)
+![](https://libs.websoft9.com/Websoft9/DocsPicture/en/phabricator/phabricator-gui.png)
 
 ---
 
 ## 改进
 
 本文档会持续改进，广泛吸收用户的需求。  
-如果您有好的想法，请点击页面下方”在Github上编辑“ 给我们反馈，欢迎Fork我们在[Github上的项目](https://github.com/Websoft9/ansible-metabase)。
+如果您有好的想法，请点击页面下方”在Github上编辑“ 给我们反馈，欢迎Fork我们在[Github上的项目](https://github.com/Websoft9/ansible-phabricator)。
 
 ## 赞助
 
