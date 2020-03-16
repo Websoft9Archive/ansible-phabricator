@@ -13,9 +13,9 @@ init_db:
 # 应用数据库信息    # TODO: 数据库名是否为应用名？需验证
 init_application:
   phabricator:
-    service: phabricator
+    service: phabricator-daemons
     database: phabricator 
-    database_user: phabricator
+    database_user: root
     database_host: localhost
     database_password: "123456"
     config_path:
