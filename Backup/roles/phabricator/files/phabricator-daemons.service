@@ -1,0 +1,15 @@
+[Unit]
+Description=Phabricator Daemons
+
+[Service]
+Enviroment="PATH=/sbin:/usr/sbin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin"
+ExecStart=/data/wwwroot/phabricator/phabricator/bin/phd start
+ExecStop=/data/wwwroot/phabricator/phabricator/bin/phd stop
+RemainAfterExit=yes
+User=www-data
+Group=www-data
+Type=oneshot
+
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,13 @@
+[
+  {
+    "key": "stmp-mailer",
+    "type": "smtp",
+    "options": {
+      "host": "(eg. smtp.gmail.com)",
+      "port": 465,
+      "user": "(eg.  USERNAME@gmail.com)",
+      "password": "(eg. PASSWORD)",
+      "protocol": "(eg.  ssl)"
+    }
+  }
+]

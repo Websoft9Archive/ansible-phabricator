@@ -1,0 +1,22 @@
+# MySQL 版本和默认密码
+mysql_version: "5.7"       
+mysql_root_password: "123456"
+phpmyadmin_mysql_password: "123456"
+php_version: "7.2"
+
+# 初始化MySQL root密码
+init_db: 
+    mysql:
+      user: root
+      password: "123456"  
+  
+# 应用数据库信息    # TODO: 数据库名是否为应用名？需验证
+init_application:
+  phabricator:
+    service: phabricator
+    database: phabricator 
+    database_user: phabricator
+    database_host: localhost
+    database_password: "123456"
+    config_path:
+      - /data/wwwroot/phabricator/phabricator/conf/local/local.json

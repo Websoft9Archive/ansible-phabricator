@@ -1,3 +1,20 @@
+- name: Install Apache and PHP
+  apt:
+    name: [git,apache2,libapache2-mod-php,php,php-mysql,php-gd,php-curl,php-apcu,php-cli,php-json,php-mbstring,php-zip]
+
+- name: Import Certbot PPA
+  apt_repository:
+    repo: ppa:certbot/certbot
+
+- name: Install Certbot
+  apt: 
+    name: [certbot,python-certbot-apache]
+
+
+- name: Enabling mod_rewrite in Apache.
+  apache2_module:
+    name: rewrite
+
 - name: Create Phabricator directory
   file:
     path: /data/{{item}}
@@ -6,15 +23,16 @@
     group: www-data
   with_items:
     - wwwroot/phabricator
+    - cert
 
 - name: Downloading Phabricator and dependencies
   git: 
     repo: '{{ item.repo }}'
     dest: /data/wwwroot/phabricator/{{ item.dest }}
   with_items:
-    - {repo: "{{libphutil_download_url}}",dest: libphutil}
-    - {repo: "{{arcanist_download_url}}",dest: arcanist}
-    - {repo: "{{phabricator_download_url}}",dest: phabricator}
+    - {repo: "https://github.com/phacility/libphutil.git",dest: libphutil}
+    - {repo: "https://github.com/phacility/arcanist.git",dest: arcanist}
+    - {repo: "https://github.com/phacility/phabricator.git",dest: phabricator}
 
 - name: Change Phabricator owner and group
   file:
@@ -28,7 +46,7 @@
     - phabricator
 
 - name: Configuration Apache
-  template: 
+  copy: 
     src: 000-default.conf
     dest: /etc/apache2/sites-available
 
@@ -40,6 +58,7 @@
     line: "{{ item.line }}"
     state: present
   with_items:
+    - {regexp: 'post_max_size = 8M' ,line: 'post_max_size = 512M'}
     - {regexp: ';opcache.validate_timestamps=1',line: 'opcache.validate_timestamps=0'}
 
 - name: Restart Apache2
@@ -47,11 +66,17 @@
     name: apache2
     state: restarted
 
+
+- name: Get MySQL root Default Password
+  shell: cat /credentials/password.txt | awk 'NR==2' |awk -F ":" '{print $2}'
+  register: mysql_password 
+
+
 - name: Configuration Connect to MySQL and Generating database
   shell: |
     ./bin/config set mysql.host localhost
     ./bin/config set mysql.user root
-    ./bin/config set mysql.pass {{mysql_root_password}}
+    ./bin/config set mysql.pass {{mysql_password.stdout}}
     ./bin/storage upgrade --force
   args:
     chdir: /data/wwwroot/phabricator/phabricator/
@@ -76,8 +101,19 @@
     - ./bin/config set repository.default-local-path /data/repo	
     - ./bin/config set pygments.enabled true
 
+- name: Configuring Phabricator for MySQL
+  copy:
+    src: mysqld.cnf
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+
+- name: restart MySQL
+  service:
+    name: mysql
+    state: restarted
+    enabled: yes
+
 - name: Phabricator Daemons 
-  template: 
+  copy: 
    src: phabricator-daemons.service
    dest: /lib/systemd/system/phabricator-daemons.service
 
@@ -88,6 +124,32 @@
     enabled: yes
 
 - name: Phabricator SMTP template
-  template: 
+  copy: 
     src: mailers.json
     dest: /data/wwwroot/phabricator/phabricator/
+
+- name: Write Databases Password
+  template:
+    src: password.txt.jinja2
+    dest: /credentials/password.txt
+    mode: 644
+
+- name: Write rc.local
+  shell: echo "#!/bin/bash" > /etc/rc.local
+
+- name: restart rc.local
+  service: name=rc.local state=restarted enabled=yes
+
+
+- name: Databases Random Password
+  template: 
+    src: init.sh.jinja2
+    dest: /root/init.sh
+    mode: 0750
+
+- name: Setting Startup
+  lineinfile:
+    path: /etc/rc.local
+    regexp: '/root/init.sh'
+    line: '/root/init.sh'
+    mode: 0750

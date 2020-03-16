@@ -1,1 +1,6 @@
 
+libphutil_download_url: https://github.com/phacility/libphutil.git
+arcanist_download_url: https://github.com/phacility/arcanist.git
+phabricator_download_url: https://github.com/phacility/phabricator.git
+
+mysql_root_password: 123456
